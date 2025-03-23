@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo Placement System</title>
+    <link rel="stylesheet" href="assets/css/rearrange.css">
+    <style>
+        /* Full-page background image styles */
+        body {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Make content readable against background */
+        .logo-container, .nav-links, header {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
+        
+        main {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .dashboard-container, .info-card, .placement-suggestion, 
+        .placement-form, .cargo-visualization, .modal-content {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add the background image -->
+    <div class="background-image">
+        <img src="https://1.bp.blogspot.com/-CI6uQwhc-cw/Xvj0RWUVC6I/AAAAAAAAE78/AnRnpQgnVas0GH087J1dbIeFndkqjAEmQCLcBGAsYHQ/s2048/SpaceX%2Borbital%2Bstation%2Babove%2Bterraformed%2BMars%2Bby%2BEncho%2BEnchev.jpg" alt="Background Image"> 
+             alt="Background Image">
+    </div>
+
+    <div class="logo-container">
+        <a href="index.html" class="logo">CargoSync</a>
+    </div>
+    <div class="nav-links">
+        <a href="placement.html">ARRANGEMENTS</a>
+        <a href="retrieval.html">RETRIEVAL</a>
+        <a href="rearange.html">OPTIMISATION</a>
+        <a href="waste.html">WASTE MANAGEMENT</a>
+        <a href="return.html">CARGO RETURN</a>
+        <a href="logs.html">ANALYSIS</a>
+    </div>
+    <header>
+        <h1>ARRANGEMENTS</h1>
+        <div class="header-buttons">
+            <button id="refreshBtn">Refresh Data</button>
+            <button id="settingsBtn">Settings</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <div class="left-panel">
+                <div class="info-card">
+                    <h2>Object Placed</h2>
+                    <div class="object-placed-stats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="objectsPlaced">0</span>
+                            <span class="stat-label">Total Objects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="placementEfficiency">0%</span>
+                            <span class="stat-label">Efficiency</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h2>Object Dimensions</h2>
+                    <div class="dimension-table">
+                        <table id="dimensionsTable">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Length</th>
+                                    <th>Width</th>
+                                    <th>Height</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dimension data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h2>Space Availability</h2>
+                    <div class="progress-container" id="spaceAvailability">
+                        <!-- Space availability bars will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h2>Object Priority</h2>
+                    <div class="priority-chart" id="priorityChart">
+                        <!-- Priority donut chart will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="placement-suggestion">
+                    <h2>Suggested Placement</h2>
+                    <div class="suggestion-container" id="suggestionContainer">
+                        <!-- Placement suggestions will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="placement-form">
+                    <h2>Add New Cargo</h2>
+                    <form id="cargoForm">
+                        <div class="form-group">
+                            <label for="cargoType">Cargo Type:</label>
+                            <select id="cargoType" required>
+                                <option value="">Select Type</option>
+                                <option value="container">Container</option>
+                                <option value="pallet">Pallet</option>
+                                <option value="box">Box</option>
+                                <option value="barrel">Barrel</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cargoLength">Length (m):</label>
+                                <input type="number" id="cargoLength" min="0.1" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cargoWidth">Width (m):</label>
+                                <input type="number" id="cargoWidth" min="0.1" step="0.1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cargoHeight">Height (m):</label>
+                                <input type="number" id="cargoHeight" min="0.1" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cargoWeight">Weight (kg):</label>
+                                <input type="number" id="cargoWeight" min="0.1" step="0.1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cargoPriority">Priority:</label>
+                            <select id="cargoPriority" required>
+                                <option value="">Select Priority</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Get Placement Suggestion</button>
+                    </form>
+                </div>
+
+                <div class="cargo-visualization">
+                    <h2>Warehouse Space Utilization</h2>
+                    <div class="visualization-container" id="visualizationContainer">
+                        <!-- 3D visualization will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modalTitle">Placement Details</h2>
+            <div id="modalContent"></div>
+            <div class="modal-buttons">
+                <button id="confirmBtn">Confirm Placement</button>
+                <button id="cancelBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Removed the old image reference -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="js/rearrange.js"></script>
+</body>
+</html>

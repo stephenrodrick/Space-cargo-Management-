@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronaut Item Retrieval System</title>
+    <link rel="stylesheet" href="assets/css/retrieval.css">
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/premium-photo/satellite-mars-orbit-unveils-mysteries-red-planets-geology_922936-701.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <a href="index.html" class="logo">CargoSync</a>
+    </div>
+    <div class="nav-links">
+        <a href="placement.html">ARRANGEMENTS</a>
+        <a href="retrieval.html">RETRIEVAL</a>
+        <a href="rearange.html">OPTIMISATION</a>
+        <a href="waste.html">WASTE MANAGEMENT</a>
+        <a href="return.html">CARGO RETURN</a>
+        <a href="logs.html">ANALYSIS</a>
+    </div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 12h8M12 8v8"></path>
+                </svg>
+                <h1>Astronaut Item Retrieval System</h1>
+            </div>
+        </header>
+        
+        <section class="search-section">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search for an item...">
+                <button id="search-button">Search</button>
+            </div>
+            
+            <div class="filter-options">
+                <button class="filter-option active" data-filter="fastest">Fastest Retrieval</button>
+                <button class="filter-option" data-filter="expiring">Expiring Soon</button>
+                <button class="filter-option" data-filter="priority">High Priority</button>
+                <button class="filter-option" data-filter="recent">Recently Added</button>
+            </div>
+        </section>
+        
+        <section class="stats-section">
+            <div class="stat-card">
+                <h3>Items Available</h3>
+                <p id="available-count">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Expiring Soon</h3>
+                <p id="expiring-count">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Average Retrieval Time</h3>
+                <p id="avg-retrieval-time">0 min</p>
+            </div>
+        </section>
+        
+        <section class="results-section">
+            <h2>Available Items</h2>
+            <div id="results-container" class="results-container">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </section>
+        
+        <div id="item-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="modal-item-name"></h2>
+                <div id="modal-item-details"></div>
+                <div class="modal-actions">
+                    <button id="retrieve-button" class="button-primary">Retrieve Item</button>
+                    <button id="cancel-button" class="button-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/retrieval.js"></script>
+</body>
+</html>

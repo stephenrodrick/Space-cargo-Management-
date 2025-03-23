@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Rearrangement Optimization</title>
+    <link rel="stylesheet" href="assets/placement.css">
+    <style>
+        /* Add this style for the full-page background image */
+        body {
+            position: relative;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Ensure content remains visible over the background */
+        .container {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px;
+        }
+        
+        /* Style for the navigation and logo at the top */
+        .logo-container, .nav-links {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add the background image as a fixed element -->
+    <div class="background-image">
+        <img src="https://cdnb.artstation.com/p/assets/images/images/009/521/325/large/subin-kim-subin-kim-ship-bg.jpg?1519456746" 
+             alt="Background Image">
+    </div>
+    
+    <div class="logo-container">
+        <a href="index.html" class="logo">CargoSync</a>
+    </div>
+    <div class="nav-links">
+        <a href="placement.html">ARRANGEMENTS</a>
+        <a href="retrieval.html">RETRIEVAL</a>
+        <a href="rearange.html">OPTIMISATION</a>
+        <a href="waste.html">WASTE MANAGEMENT</a>
+        <a href="return.html">CARGO RETURN</a>
+        <a href="logs.html">ANALYSIS</a>
+    </div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 12h8M12 8v8"></path>
+                </svg>
+                <h1>Space Rearrangement Optimization</h1>
+            </div>
+        </header>
+
+        <section class="storage-overview">
+            <h2>Storage Bay Status</h2>
+            <div class="storage-stats">
+                <div class="stat-card">
+                    <h3>Total Capacity</h3>
+                    <p id="total-capacity">100 cubic meters</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Currently Used</h3>
+                    <p id="used-capacity">70 cubic meters</p>
+                    <div class="progress-bar">
+                        <div class="progress" id="capacity-progress" style="width: 70%;"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Space Available</h3>
+                    <p id="available-capacity">30 cubic meters</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="new-shipment">
+            <h2>New Shipment Details</h2>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="shipment-volume">Shipment Volume (cubic meters):</label>
+                    <input type="number" id="shipment-volume" min="1" value="35">
+                </div>
+                <div class="form-group">
+                    <label for="shipment-priority">Priority Level:</label>
+                    <select id="shipment-priority">
+                        <option value="Critical">Critical</option>
+                        <option value="High">High</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="shipment-contents">Shipment Contents:</label>
+                    <textarea id="shipment-contents" rows="3" placeholder="Enter description of items...">Oxygen tanks, medical supplies, food rations</textarea>
+                </div>
+                <button id="analyze-btn" class="primary-btn">Analyze Space Requirements</button>
+            </div>
+        </section>
+
+        <section class="optimization-results" id="optimization-section" style="display: none;">
+            <h2>Optimization Results</h2>
+            <div class="alert" id="space-alert">
+                <p id="alert-message">Space shortage detected! We need to rearrange items to accommodate this shipment.</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="items-to-move">Items to Move</button>
+                <button class="tab-btn" data-tab="new-arrangement">New Arrangement</button>
+                <button class="tab-btn" data-tab="visualization">Visualization</button>
+            </div>
+
+            <div class="tab-content active" id="items-to-move">
+                <h3>Suggested Items to Relocate</h3>
+                <p>These items can be rearranged to create space for the new shipment:</p>
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Current Location</th>
+                            <th>Volume</th>
+                            <th>Priority</th>
+                            <th>New Location</th>
+                        </tr>
+                    </thead>
+                    <tbody id="items-to-move-body">
+                        <!-- This will be populated by JavaScript -->
+                    </tbody>
+                </table>
+                <div class="summary">
+                    <p>Total space recovered: <span id="space-recovered">0</span> cubic meters</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="new-arrangement">
+                <h3>New Storage Layout</h3>
+                <div class="storage-zones">
+                    <div class="zone-container" id="zones-container">
+                        <!-- This will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="notes">
+                    <h4>Notes:</h4>
+                    <ul id="arrangement-notes">
+                        <!-- This will be populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-content" id="visualization">
+                <h3>Space Utilization Visualization</h3>
+                <div class="visualization-container">
+                    <div class="before-after">
+                        <div class="viz-panel">
+                            <h4>Before Rearrangement</h4>
+                            <div class="storage-viz" id="before-viz">
+                                <!-- This will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="viz-panel">
+                            <h4>After Rearrangement</h4>
+                            <div class="storage-viz" id="after-viz">
+                                <!-- This will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="approve-btn" class="primary-btn">Approve Rearrangement</button>
+                <button id="modify-btn" class="secondary-btn">Modify Plan</button>
+                <button id="cancel-btn" class="danger-btn">Cancel</button>
+            </div>
+        </section>
+
+        <div id="confirmation-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Rearrangement Approved</h2>
+                <p>The rearrangement plan has been approved and sent to the logistics team.</p>
+                <p>Estimated completion time: <span id="completion-time">45 minutes</span></p>
+                <div class="task-list">
+                    <h3>Tasks Generated:</h3>
+                    <ul id="task-list">
+                        <!-- This will be populated by JavaScript -->
+                    </ul>
+                </div>
+                <button id="close-modal-btn" class="primary-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/placement.js"></script>
+</body>
+</html>
