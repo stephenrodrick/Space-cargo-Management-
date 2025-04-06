@@ -129,3 +129,6 @@ cargosync/
 
 - This project was developed for the space cargo management challenge
 - Thanks to the ISS research that informed the design requirements
+
+# Deployed Website link 
+https://cargo-sync-system.vercel.app/index.html# 
